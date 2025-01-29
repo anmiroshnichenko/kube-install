@@ -18,15 +18,21 @@ EOF
 # Apply sysctl params without reboot
 sudo sysctl --system
 
+# Step 2: Disable swap on all the Nodes
+sudo swapoff -a
+
+
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
+apt-cache madison kubeadm | tac
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl containerd
 sudo apt-mark hold kubelet kubeadm kubectl
 
+sudo kubeadm init --apiserver-advertise-address=192.168.10.10  --apiserver-cert-extra-sans=158.160.56.60  --pod-network-cidr=10.244.0.0/16
 sudo kubeadm init --apiserver-advertise-address=$IPADDR  --apiserver-cert-extra-sans=$IPADDR  --pod-network-cidr=10.244.0.0/16
 
 mkdir -p $HOME/.kube
