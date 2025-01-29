@@ -1,3 +1,5 @@
+# Step 1: Enable iptables Bridged Traffic on all the Nodes
+
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
@@ -13,6 +15,7 @@ net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                 = 1
 EOF
 
+# Apply sysctl params without reboot
 sudo sysctl --system
 
 sudo apt-get update
