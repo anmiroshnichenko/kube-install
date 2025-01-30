@@ -32,7 +32,7 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl containerd
 sudo apt-mark hold kubelet kubeadm kubectl
 
-sudo kubeadm init --apiserver-advertise-address=192.168.10.10  --apiserver-cert-extra-sans=158.160.56.60  --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --apiserver-advertise-address=192.168.10.10  --apiserver-cert-extra-sans=158.160.56.60  --pod-network-cidr=10.244.0.0/16  --control-plane-endpoint=192.168.10.5
 sudo kubeadm init --apiserver-advertise-address=$IPADDR  --apiserver-cert-extra-sans=$IPADDR  --pod-network-cidr=10.244.0.0/16
 
 mkdir -p $HOME/.kube
